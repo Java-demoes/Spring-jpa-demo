@@ -25,7 +25,7 @@ public interface CustomerRepository extends CrudRepository<Customer,Long> , Cust
     @Query("Select C from Customer C where C.firstName like %?1%")
     Optional<List<Customer>> findByFirstNameContaining(String fragment);
 
-    // if there is a conflict between a namedwuery and query, query is given priority
+    // if there is a conflict between a namedQuery and query, query is given priority
 
 
 

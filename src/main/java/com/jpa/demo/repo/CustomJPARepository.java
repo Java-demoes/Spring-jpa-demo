@@ -18,7 +18,7 @@ public interface CustomJPARepository<T> {
 
   Iterable<T> retriveAll();
 
-  //PROVIDING CUSTOM SAVE IMPLEMENATION
+  //PROVIDING CUSTOM SAVE IMPLEMENATION.
   // this has higher precendence over save method from CRUD REPO
   // if return type is defined as T directly, we can either use T class or a sub class of T
   // when u say S extends T, a  DTO can be passed  which need not be extending to T,

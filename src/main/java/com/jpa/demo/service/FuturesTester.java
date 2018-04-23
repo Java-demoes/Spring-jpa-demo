@@ -233,8 +233,9 @@ public class FuturesTester {
         CompletableFuture cf = CompletableFuture.supplyAsync(() -> repo.retriveAll());
         return cf;
     }
-
+    //overiging with custom save behaviour
     public CompletableFuture<Customer> customSave(Customer customer){
+        // custom repo CustomerRepoImpl's save
         return CompletableFuture.supplyAsync(() -> repo.save(customer));
     }
 

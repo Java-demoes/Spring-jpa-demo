@@ -6,6 +6,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.persistence.NamedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,6 @@ import java.util.Optional;
  * all supported query keywords
  * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
  * */
-
 public interface CustomerRepository extends CrudRepository<Customer,Long> , CustomJPARepository<Customer> {
 
     List<Customer> findByLastName(String lastName);
@@ -29,6 +29,8 @@ public interface CustomerRepository extends CrudRepository<Customer,Long> , Cust
 
     @Query("Select C from Customer C where C.firstName like %?1%")
     Optional<List<Customer>> findByFirstNameContaining(String fragment);
+
+
 
     // if there is a conflict between a namedQuery and query, query is given priority
 

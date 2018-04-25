@@ -1,6 +1,7 @@
 package com.jpa.demo.entities;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 
 @Entity
 @NamedQuery(name="Customer.findByFirstAndLastName",query = "select c from Customer c where c.firstName= ?1 and c.lastName= ?2")
@@ -84,7 +85,7 @@ public class Customer {
         return "Customer{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName +
+                ", lastName='" + lastName + '\'' +
                 '}';
     }
 }

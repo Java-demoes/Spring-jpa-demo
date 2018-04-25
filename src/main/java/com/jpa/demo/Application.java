@@ -1,5 +1,6 @@
 package com.jpa.demo;
 
+import com.jpa.demo.entities.Address;
 import com.jpa.demo.entities.Customer;
 import com.jpa.demo.repo.CustomerRepository;
 import com.jpa.demo.service.FuturesTester;
@@ -34,10 +35,10 @@ public class Application {
 @Bean
     public CommandLineRunner demo(CustomerRepository repo, FuturesTester tester){
         return(args -> {
-            repo.save(new Customer("Preetham","salehundam"));
-            repo.save(new Customer("Tarun","Madugula"));
-            repo.save(new Customer("Amit","Das"));
-            repo.save(new Customer("Naveen","Ravi"));
+            repo.save(new Customer("Preetham","salehundam", new Address("AP","India")));
+            repo.save(new Customer("Tarun","Madugula",new Address("telengana","India")));
+            repo.save(new Customer("Amit","Das",new Address("Odissa","India")));
+            repo.save(new Customer("Naveen","Ravi",new Address("Shimoga","India")));
             log.info("inserted customers");
 
 //            log.info("fetching customers");

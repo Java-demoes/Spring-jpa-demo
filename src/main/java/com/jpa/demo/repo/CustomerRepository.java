@@ -4,6 +4,8 @@ import com.jpa.demo.entities.Customer;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
+
+import javax.persistence.NamedQuery;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,12 +15,15 @@ import java.util.Optional;
  * so it searches for CustomJPARepositoryImpl
  * and provides the method inside it
  *
+ * all supported query keywords
+ * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
  * */
 
 public interface CustomerRepository extends CrudRepository<Customer,Long> , CustomJPARepository<Customer> {
 
     List<Customer> findByLastName(String lastName);
 
+    //named query defined in customer.java
     Optional<Customer> findByFirstAndLastName(String firstName, String lastName);
 
 

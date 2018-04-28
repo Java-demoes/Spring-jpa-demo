@@ -1,7 +1,7 @@
 package com.jpa.demo.entities;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
+import java.util.List;
 
 @Entity
 @NamedQuery(name="Customer.findByFirstAndLastName",query = "select c from Customer c where c.firstName= ?1 and c.lastName= ?2")
@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
     private Long id;
     @Column(name = "first_name")
@@ -18,8 +18,7 @@ public class Customer {
     @Column(name = "last_Name")
     private String lastName;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn
+    @Embedded
     private Address address;
 
     // for JPA - protected can be accessed by classes in the package and subclasses outside the package , unlike default which has only visibility at package level

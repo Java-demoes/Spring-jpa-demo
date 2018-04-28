@@ -4,16 +4,16 @@ import org.hibernate.annotations.CollectionId;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name="address")
+@Embeddable
 public class Address {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
-
+//    @Id
+////    @SequenceGenerator(name="address_id_generator",sequenceName = "generate_address_seq",initialValue = 1,allocationSize = 100)
+////    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "address_id_generator")
+////    private long id;
     private String state;
     private String country;
+
 
     protected Address(){};
 
@@ -24,9 +24,9 @@ public class Address {
     }
 
 
-    public long getId() {
-        return id;
-    }
+//    public long getId() {
+//        return id;
+//    }
 
 
     public String getState() {
@@ -42,7 +42,7 @@ public class Address {
     @Override
     public String toString() {
         return "Address{" +
-                "id=" + id +
+//                "id=" + id +
                 ", state='" + state + '\'' +
                 ", country='" + country + '\'' +
                 '}';

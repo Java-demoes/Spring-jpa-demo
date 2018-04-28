@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.Predicate;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -19,6 +20,10 @@ import java.util.stream.Stream;
  * refer : http://www.baeldung.com/java-completablefuture
  */
 @Component
+@Transactional
+// uses the same transaction when a two repo methods are called in a single method
+// ideally should be done at method level
+// class level annotation has lesser priority than method level
 public class FuturesTester {
 
     @Autowired

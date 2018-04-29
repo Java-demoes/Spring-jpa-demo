@@ -15,6 +15,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.slf4j.Logger;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -86,6 +88,17 @@ public class Application {
             repo.findAll(CustomerSpecs.NameDoesntContain).forEach(System.out::println);
             repo.findAll(where(CustomerSpecs.NameContains).or(CustomerSpecs.NameContainsR)).forEach(System.out::println);
             log.info("************");
+
+
+            log.info("using EXAMPLE API");
+            Customer exampleCust = new Customer("ree","dam");
+            ExampleMatcher matcher = ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+            Example<Customer> example = Example.of(exampleCust,matcher);
+            repo.findAll(example).forEach(System.out::println);
+            log.info("End of example API");
+
+
+
             Future<String> result = tester.calculateAsync();
 
             log.info((String) result.get());

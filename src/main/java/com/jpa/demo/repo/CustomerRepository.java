@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.QueryByExampleExecutor;
 
 import javax.persistence.NamedQuery;
 import javax.transaction.Transactional;
@@ -25,7 +26,10 @@ import java.util.Optional;
  * all supported query keywords
  * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
  * */
-public interface CustomerRepository extends CrudRepository<Customer,Long> , CustomJPARepository<Customer> , JpaSpecificationExecutor {
+public interface CustomerRepository extends CrudRepository<Customer,Long> ,
+        CustomJPARepository<Customer> ,
+        JpaSpecificationExecutor,
+        QueryByExampleExecutor {
 
     List<Customer> findByLastName(String lastName);
 

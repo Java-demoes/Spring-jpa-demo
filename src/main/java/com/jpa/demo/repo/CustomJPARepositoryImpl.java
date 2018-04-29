@@ -45,7 +45,6 @@ public class CustomJPARepositoryImpl implements CustomJPARepository<Customer> {
     }
 
     @Override
-    @Transactional
     public Customer save(Customer entity) {
         log.info("saving entity "+ entity);
         entityManager.persist(entity);

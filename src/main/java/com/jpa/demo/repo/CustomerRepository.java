@@ -4,6 +4,8 @@ import com.jpa.demo.DTO.CustomerProjectionDTO;
 import com.jpa.demo.entities.Customer;
 import com.jpa.demo.jpaProjections.CustomerOpenProjection;
 import com.jpa.demo.jpaProjections.CustomerProjection;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
@@ -23,7 +25,7 @@ import java.util.Optional;
  * all supported query keywords
  * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
  * */
-public interface CustomerRepository extends CrudRepository<Customer,Long> , CustomJPARepository<Customer> {
+public interface CustomerRepository extends CrudRepository<Customer,Long> , CustomJPARepository<Customer> , JpaSpecificationExecutor {
 
     List<Customer> findByLastName(String lastName);
 
@@ -45,6 +47,9 @@ public interface CustomerRepository extends CrudRepository<Customer,Long> , Cust
     List<CustomerOpenProjection> findByFirstNameAndLastName(String firstName, String lastName);
 
     List<CustomerProjectionDTO> findByFirstNameAndLastNameIgnoreCase(String firstName, String lastName);
+
+
+    List<Customer> findAll(Specification spec);
 
 
 

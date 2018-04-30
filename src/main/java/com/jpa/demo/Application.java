@@ -91,12 +91,11 @@ public class Application {
 
 
             log.info("using EXAMPLE API");
-            Customer exampleCust = new Customer("ree","dam");
+            Customer exampleCust = new Customer("ree", "dam");
             ExampleMatcher matcher = ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-            Example<Customer> example = Example.of(exampleCust,matcher);
+            Example<Customer> example = Example.of(exampleCust, matcher);
             repo.findAll(example).forEach(System.out::println);
             log.info("End of example API");
-
 
 
             Future<String> result = tester.calculateAsync();

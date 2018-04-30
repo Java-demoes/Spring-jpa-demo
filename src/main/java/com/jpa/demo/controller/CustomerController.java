@@ -1,16 +1,17 @@
 package com.jpa.demo.controller;
 
+import com.jpa.demo.Exceptions.CustomerNotFound;
 import com.jpa.demo.repo.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.jpa.demo.entities.Customer;
 
+import javax.xml.ws.Response;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -79,8 +80,32 @@ public class CustomerController {
        // List<Customer> customers = Stream.of(futures.toArray()).map((future) -> {}).collect(Collectors.toList());
 
 
+
+
         return null;
     }
+
+    @RequestMapping(value = "/testexception",method = RequestMethod.GET)
+    public ResponseEntity<Customer> testExceptionHandler(@RequestParam(value = "exception")String exception) throws CustomerNotFound,InterruptedException,Exception {
+        CompletableFuture cf  = new CompletableFuture();
+        log.info("called!");
+        cf.cancel(true);
+
+        if("Customernotfound".equalsIgnoreCase(exception))
+            // handle by default spring excpetion handler
+            throw new CustomerNotFound("Customer not found");
+        else if("InterruptedException".equalsIgnoreCase(exception))
+            // handled by controller advice
+            throw new InterruptedException("process interrupted!");
+        else if("exception".equalsIgnoreCase(exception))
+            // unhandled
+            throw new Exception("error occurred!");
+
+        return ResponseEntity.accepted().build();
+    }
+
+
+
 
 
 }

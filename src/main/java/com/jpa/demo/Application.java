@@ -7,6 +7,7 @@ import com.jpa.demo.entities.Customer;
 import com.jpa.demo.jpaProjections.CustomerProjection;
 import com.jpa.demo.repo.CustomerRepository;
 import com.jpa.demo.service.FuturesTester;
+import org.json.JSONObject;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
@@ -151,6 +153,10 @@ public class Application {
             //overiding with custom save behaviour
             CompletableFuture<Customer> resutl11 = tester.customSave(new Customer("Namitha", ""));
             log.info(((Customer) resutl11.get()).toString());
+
+            RestTemplate template = new RestTemplate();
+            JSONObject props = new JSONObject(template.getForObject("http://127.0.0.1:8089/props",String.class));
+            System.out.println(props.toString());
 
 
         });

@@ -5,16 +5,17 @@ import com.jpa.demo.repo.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.env.EnvironmentPostProcessor;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import com.jpa.demo.entities.Customer;
 
 import javax.xml.ws.Response;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.*;
 
 @RestController
@@ -25,6 +26,9 @@ public class CustomerController {
 
     @Autowired
     private CustomerRepository repo;
+
+    @Autowired
+    Environment env;
 
 
     @RequestMapping("/getAll")
@@ -92,10 +96,10 @@ public class CustomerController {
         cf.cancel(true);
 
         if("Customernotfound".equalsIgnoreCase(exception))
-            // handle by default spring excpetion handler
+            // handle by controller level exception handler
             throw new CustomerNotFound("Customer not found");
         else if("InterruptedException".equalsIgnoreCase(exception))
-            // handled by controller advice
+            // handled by controller advice  and global exceptionhandler
             throw new InterruptedException("process interrupted!");
         else if("exception".equalsIgnoreCase(exception))
             // unhandled
@@ -104,6 +108,14 @@ public class CustomerController {
         return ResponseEntity.accepted().build();
     }
 
+    //cntroller level exception handler
+    @ExceptionHandler(CustomerNotFound.class)
+    public ResponseEntity<Map<String,String>> CustomerNotFoundHandler(CustomerNotFound ex){
+        Map<String,String> error = new HashMap<>();
+        error.put("status","404");
+        error.put("cause","customer was not found in our DB!");
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
 
 
 
